@@ -45,4 +45,4 @@ Este projeto é licenciado sob a [MIT License](LICENSE). Veja o arquivo LICENSE 
 
 ---
 
-Desenvolvido por [Ródiney Wanderson] - [rodineyw](https://www.linkedin.com/in/rodineyw/)
+Desenvolvido por [Ródiney Wanderson](https://github.com/rodineyw) - [Linkedin](https://www.linkedin.com/in/rodineyw/)
