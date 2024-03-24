@@ -4,14 +4,17 @@ from tkinter import filedialog
 
 
 def selecionar_arquivos():
+    # Abre uma janela para o usuário selecionar os arquivos que deseja renomear
     arquivos = filedialog.askopenfilenames(title="Selecione os arquivos para renomear")
     return arquivos
 
 
 def renomear_arquivos(arquivos, novo_nome, diretorio_destino):
+    # Cria o diretório de destino se ele não existir
     if not os.path.exists(diretorio_destino):
         os.makedirs(diretorio_destino)
 
+    # Renomeia cada arquivo selecionado com o novo nome fornecido
     for filepath in arquivos:
         diretorio, filename = os.path.split(filepath)
         nome, extensao = os.path.splitext(filename)
@@ -22,12 +25,14 @@ def renomear_arquivos(arquivos, novo_nome, diretorio_destino):
 
 
 def iniciar_interface():
+    # Inicializa a interface gráfica do usuário
     root = tk.Tk()
     root.title("Renomear arquivos em massa")
 
     arquivos_selecionados = []
 
     def selecionar_arquivos_callback():
+        # Função de callback para selecionar os arquivos
         arquivos = selecionar_arquivos()
         if arquivos:
             arquivos_selecionados.clear()
@@ -37,6 +42,7 @@ def iniciar_interface():
                 arquivos_listbox.insert(tk.END, arquivo)
 
     def renomear_arquivos_callback():
+        # Função de callback para renomear os arquivos selecionados
         novo_nome = novo_nome_entry.get()
         diretorio_destino = filedialog.askdirectory(
             title="Selecione o diretório de destino"
@@ -45,33 +51,29 @@ def iniciar_interface():
             renomear_arquivos(arquivos_selecionados, novo_nome, diretorio_destino)
             resultado_label.config(text="Arquivos renomeados com sucesso!")
 
+    # Criação dos componentes da interface gráfica
     arquivo_label = tk.Label(root, text="Arquivos selecionados:")
     arquivo_listbox = tk.Listbox(root, width=50, height=10)
     arquivo_button = tk.Button(
         root, text="Selecionar Arquivos", command=selecionar_arquivos_callback
     )
-
     novo_nome_label = tk.Label(root, text="Novo Nome: ")
     novo_nome_entry = tk.Entry(root, width=50)
-
     renomear_button = tk.Button(
         root, text="Renomear arquivos", command=renomear_arquivos_callback
     )
-
     resultado_label = tk.Label(root, text="")
 
+    # Organizando os componentes na janela
     arquivo_label.grid(row=0, column=0, sticky="w", padx=10, pady=5)
     arquivo_listbox.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
     arquivo_button.grid(row=1, column=2, padx=10, pady=5)
-
     novo_nome_label.grid(row=2, column=0, sticky="w", padx=10, pady=5)
     novo_nome_entry.grid(row=2, column=1, padx=10, pady=5)
-
     renomear_button.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
-
     resultado_label.grid(row=4, column=0, columnspan=3)
 
-    root.mainloop()
+    root.mainloop()  # Executa a interface gráfica
 
 
-iniciar_interface()
+iniciar_interface()  # Inicia a execução do programa
