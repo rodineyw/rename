@@ -7,6 +7,11 @@ Este projeto consiste em uma aplicação em Python que permite ao usuário renom
 - Seleção múltipla de arquivos para renomeação.
 - Interface gráfica amigável para fácil utilização.
 - Possibilidade de definir o diretório de destino para os arquivos renomeados.
+  
+## Novidades
+
+- Renomeação de arquivos com base em uma lista de nomes fornecida pelo usuário.
+- Interface gráfica aprimorada para maior facilidade de uso.
 
 ## Como Usar
 
