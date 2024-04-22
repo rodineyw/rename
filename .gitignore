@@ -35,6 +35,13 @@ build/
 # PyInstaller log file
 *.log
 
+# Inno Setup
+executavel.iss
+
+# Installer logs
+*.egg-info/
+pip-wheel-metadata/
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
