@@ -30,12 +30,12 @@ Se você quer entrar nessa de renomear arquivos em massa, segue o passo a passo:
    ```bash
    python app.py
    ```
-4. **Use a Interface:** Selecione os arquivos que quer renomear, insira os novos nomes e escolha onde salvar. É bem tranquilo!
+4. **Use a Interface:** Selecione os arquivos que quer renomear, insira os novos nomes em um arquivo .TXT pulando linhas para separar os diferentes nomes e escolha onde salvar. É bem tranquilo!
 5. **Bora Renomear:** Agora é só clicar e ver a mágica acontecer.
 
 ## Plataforma Windows
 
-Se você estiver no Windows, pode instalar o App usando o executavel.
+Se você estiver no Windows, pode instalar o App usando o instalador "Renomear_Arquivos_Instalador.exe".
 
 ## Plataforma Linux e Mac
 
