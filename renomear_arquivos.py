@@ -4,6 +4,31 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 from typing import List
+import PyPDF2
+
+
+def dividir_pdf(caminho_pdf: str, diretorio_destino: str):
+    """Função que divide um arquivo PDF em arquivos individuais."""
+    try:
+        with open(caminho_pdf, "rb") as arquivo_pdf:
+            leitor_pdf = PyPDF2.PdfReader(arquivo_pdf)
+            num_paginas = len(leitor_pdf.pages)
+
+            for pagina in range(num_paginas):
+                escritor_pdf = PyPDF2.PdfWriter()
+                escritor_pdf.add_page(leitor_pdf.pages[pagina])
+
+                novo_nome_pdf = f"{os.path.splitext(os.path.basename(caminho_pdf)
+                )[0]}_{pagina+1}.pdf"
+                caminho_completo = os.path.join(diretorio_destino, novo_nome_pdf)
+
+                with open(caminho_completo, "wb") as arquivo_saida:
+                    escritor_pdf.write(arquivo_saida)
+                print(f"Página {pagina + 1} salva como: {novo_nome_pdf}")
+
+        return "PDF divido com sucesso!"
+    except ImportError as e:
+        return str(e)
 
 
 def selecionar_arquivos():
@@ -62,6 +87,19 @@ def iniciar_interface():
             for arquivo in arquivos:
                 arquivos_listbox.insert(tk.END, arquivo)
 
+    def dividir_pdf_callback():
+        caminho_pdf = filedialog.askopenfilename(
+            title="Selecione o arquivo PDF para dividir",
+            filetypes=[("Arquivos PDF", "*.pdf")],
+        )
+        if caminho_pdf:
+            diretorio_destino = filedialog.askdirectory(
+                title="Selecione o diretório de destino para as páginas divididas"
+            )
+            if diretorio_destino:
+                mensagem = dividir_pdf(caminho_pdf, diretorio_destino)
+                resultado_label.config(text=mensagem)
+
     def renomear_arquivos_callback():
         caminho_nomes = filedialog.askopenfilename(
             title="Selecione o arquivo com os novos nomes"
@@ -80,14 +118,19 @@ def iniciar_interface():
     arquivo_button = tk.Button(
         root, text="Selecionar Arquivos", command=selecionar_arquivos_callback
     )
+    dividir_pdf_button = tk.Button(
+        root, text="Dividir PDF", command=dividir_pdf_callback
+    )
     renomear_button = tk.Button(
         root, text="Renomear arquivos", command=renomear_arquivos_callback
     )
     resultado_label = tk.Label(root, text="")
+    resultado_label.grid(row=4, column=0, columnspan=3)
 
     arquivo_label.grid(row=0, column=0, sticky="w", padx=10, pady=5)
     arquivos_listbox.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
     arquivo_button.grid(row=1, column=2, padx=10, pady=5)
+    dividir_pdf_button.grid(row=2, column=0, padx=10, pady=5)
     renomear_button.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
     resultado_label.grid(row=4, column=0, columnspan=3)
 
