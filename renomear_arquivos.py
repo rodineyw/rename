@@ -31,7 +31,7 @@ def renomear_arquivos(
     for filepath, novo_nome in zip(arquivos, lista_novos_nomes):
         try:
             diretorio_destino, filename = os.path.split(filepath)
-            base, extensao = os.path.splitext(filename)
+            extensao = os.path.splitext(filename)
             novo_nome_arquivo = f"{novo_nome}{extensao}"
             caminho_novo_arquivo = os.path.join(diretorio_destino, novo_nome_arquivo)
 
@@ -42,7 +42,7 @@ def renomear_arquivos(
                 print(
                     f"Erro: arquivo {novo_nome_arquivo} já existe em {diretorio_destino}"
                 )
-        except Exception as e:
+        except ImportError as e:
             print(f"Erro ao renomear {filepath}: {e}")
 
 
