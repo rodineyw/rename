@@ -49,14 +49,19 @@ def ler_nomes_arquivo(caminho_nomes: str) -> List[str]:
 
 
 def renomear_arquivos(
-    arquivos: List[str], lista_novos_nomes: List[str], diretorio_destino: str
-) -> None:
+    arquivos: List[str],
+    lista_novos_nomes: List[str],
+    diretorio_destino: str,
+    progresso,
+    root
+    ) -> str:
     """Função que renomea uma lista de arquivos para novos nomes."""
     if len(arquivos) != len(lista_novos_nomes):
         return "Número de arquivos e nomes não correspondem!"
 
     try:
-        for filepath, novo_nome in zip(arquivos, lista_novos_nomes):
+        progresso['maximum'] = len(arquivos)
+        for index, (filepath, novo_nome) in enumerate(zip(arquivos, lista_novos_nomes)):
             _, filename = os.path.split(filepath)
             extensao = os.path.splitext(filename)[1]
             novo_nome_arquivo = f"{novo_nome}{extensao}"
@@ -66,6 +71,8 @@ def renomear_arquivos(
                 os.rename(filepath, caminho_novo_arquivo)
             else:
                 return f"Erro: arquivo {novo_nome_arquivo} já existe em {diretorio_destino}"
+            progresso['value'] = index + 1
+            root.update_idletasks()
         return "Arquivos renomeados com sucesso!"
     except ImportError as e:
         return f"Erro ao renomear: {e}"
@@ -117,8 +124,15 @@ def iniciar_interface():
             title="Selecione o diretório de destino"
         )
         if arquivos_selecionados and novos_nomes and diretorio_destino:
-            mensagem = renomear_arquivos(arquivos_selecionados, novos_nomes, diretorio_destino)
+            mensagem = renomear_arquivos(
+                arquivos_selecionados,
+                novos_nomes,
+                diretorio_destino,
+                progresso,
+                root
+                )
             resultado_label.config(text=mensagem)
+            progresso['value'] = 0
 
     arquivo_label = tk.Label(root, text="Arquivos selecionados:")
     arquivos_listbox = tk.Listbox(root, width=50, height=10)
