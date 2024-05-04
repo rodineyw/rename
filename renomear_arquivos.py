@@ -1,28 +1,37 @@
+""" Módulo de importação Python para renomear arquivos. """
+
 import os
 import tkinter as tk
-from tkinter import filedialog, simpledialog
+from tkinter import filedialog
+from typing import List
 
 
 def selecionar_arquivos():
+    """Função que abre um dialogo para selecionar varios arquivos."""
     arquivos = filedialog.askopenfilenames(title="Selecione os arquivos para renomear")
     return arquivos
 
 
-def ler_nomes_arquivo(caminho_nomes):
-    with open(caminho_nomes, "r") as arquivo:
-        nomes = [linha.strip() for linha in arquivo.readlines() if linha.strip()]
+def ler_nomes_arquivo(caminho_nomes: str) -> List[str]:
+    """Função que lê o conteúdo de um arquivo de texto
+    e retorna uma lista com os nomes contidos no arquivo."""
+    with open(caminho_nomes, "r", encoding="utf-8") as arquivo:
+        nomes = [linha.strip() for linha in arquivo if linha.strip()]
     return nomes
 
 
-def renomear_arquivos(arquivos, lista_novos_nomes, diretorio_destino):
+def renomear_arquivos(
+    arquivos: List[str], lista_novos_nomes: List[str], diretorio_destino: str
+) -> None:
+    """Função que renomea uma lista de arquivos para novos nomes."""
     if len(arquivos) != len(lista_novos_nomes):
         print("Número de arquivos e nomes não correspondem!")
         return
 
     for filepath, novo_nome in zip(arquivos, lista_novos_nomes):
         try:
-            diretorio, filename = os.path.split(filepath)
-            _, extensao = os.path.splitext(filename)
+            diretorio_destino, filename = os.path.split(filepath)
+            base, extensao = os.path.splitext(filename)
             novo_nome_arquivo = f"{novo_nome}{extensao}"
             caminho_novo_arquivo = os.path.join(diretorio_destino, novo_nome_arquivo)
 
@@ -38,6 +47,7 @@ def renomear_arquivos(arquivos, lista_novos_nomes, diretorio_destino):
 
 
 def iniciar_interface():
+    """Função que inicia a interface gráfica."""
     root = tk.Tk()
     root.title("Renomear arquivos em massa")
 
