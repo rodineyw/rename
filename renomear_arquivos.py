@@ -40,7 +40,7 @@ def selecionar_arquivos():
 def ler_nomes_arquivo(caminho_nomes: str) -> List[str]:
     """Função que lê o conteúdo de um arquivo de texto
     e retorna uma lista com os nomes contidos no arquivo."""
-    with open(caminho_nomes, "r", encoding="utf-8") as arquivo:
+    with open(caminho_nomes, "r") as arquivo:
         nomes = [linha.strip() for linha in arquivo if linha.strip()]
     return nomes
 
@@ -50,25 +50,22 @@ def renomear_arquivos(
 ) -> None:
     """Função que renomea uma lista de arquivos para novos nomes."""
     if len(arquivos) != len(lista_novos_nomes):
-        print("Número de arquivos e nomes não correspondem!")
-        return
+        return "Número de arquivos e nomes não correspondem!"
 
-    for filepath, novo_nome in zip(arquivos, lista_novos_nomes):
-        try:
-            diretorio_destino, filename = os.path.split(filepath)
-            extensao = os.path.splitext(filename)
+    try:
+        for filepath, novo_nome in zip(arquivos, lista_novos_nomes):
+            _, filename = os.path.split(filepath)
+            extensao = os.path.splitext(filename)[1]
             novo_nome_arquivo = f"{novo_nome}{extensao}"
-            caminho_novo_arquivo = os.path.join(diretorio_destino, novo_nome_arquivo)
+            caminho_novo_arquivo = os.path.join(diretorio_destino,novo_nome_arquivo)
 
             if not os.path.exists(caminho_novo_arquivo):
                 os.rename(filepath, caminho_novo_arquivo)
-                print(f"Arquivo renomeado: {filename} -> {novo_nome_arquivo}")
             else:
-                print(
-                    f"Erro: arquivo {novo_nome_arquivo} já existe em {diretorio_destino}"
-                )
-        except ImportError as e:
-            print(f"Erro ao renomear {filepath}: {e}")
+                return f"Erro: arquivo {novo_nome_arquivo} já existe em {diretorio_destino}"
+        return "Arquivos renomeados com sucesso!"
+    except ImportError as e:
+        return f"Erro ao renomear: {e}"
 
 
 def iniciar_interface():
@@ -110,8 +107,8 @@ def iniciar_interface():
             title="Selecione o diretório de destino"
         )
         if arquivos_selecionados and novos_nomes and diretorio_destino:
-            renomear_arquivos(arquivos_selecionados, novos_nomes, diretorio_destino)
-            resultado_label.config(text="Arquivos renomeados com sucesso!")
+            mensagem = renomear_arquivos(arquivos_selecionados, novos_nomes, diretorio_destino)
+            resultado_label.config(text=mensagem)
 
     arquivo_label = tk.Label(root, text="Arquivos selecionados:")
     arquivos_listbox = tk.Listbox(root, width=50, height=10)
