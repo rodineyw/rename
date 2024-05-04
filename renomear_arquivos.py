@@ -1,18 +1,20 @@
-""" Módulo de importação Python para renomear arquivos. """
+""" Módulo de importação Python para renomear arquivos e tratar arquivo PDF. """
 
 import os
 import tkinter as tk
+from tkinter import ttk
 from tkinter import filedialog
 from typing import List
 import PyPDF2
 
 
-def dividir_pdf(caminho_pdf: str, diretorio_destino: str):
+def dividir_pdf(caminho_pdf: str, diretorio_destino: str, progresso, root):
     """Função que divide um arquivo PDF em arquivos individuais."""
     try:
         with open(caminho_pdf, "rb") as arquivo_pdf:
             leitor_pdf = PyPDF2.PdfReader(arquivo_pdf)
             num_paginas = len(leitor_pdf.pages)
+            progresso['maximum'] = num_paginas
 
             for pagina in range(num_paginas):
                 escritor_pdf = PyPDF2.PdfWriter()
@@ -24,7 +26,9 @@ def dividir_pdf(caminho_pdf: str, diretorio_destino: str):
 
                 with open(caminho_completo, "wb") as arquivo_saida:
                     escritor_pdf.write(arquivo_saida)
-                print(f"Página {pagina + 1} salva como: {novo_nome_pdf}")
+                progresso['value'] = pagina + 1
+                root.update_idletasks()
+                return f"Página {pagina + 1} salva como: {novo_nome_pdf}"
 
         return "PDF divido com sucesso!"
     except ImportError as e:
@@ -40,7 +44,7 @@ def selecionar_arquivos():
 def ler_nomes_arquivo(caminho_nomes: str) -> List[str]:
     """Função que lê o conteúdo de um arquivo de texto
     e retorna uma lista com os nomes contidos no arquivo."""
-    with open(caminho_nomes, "r") as arquivo:
+    with open(caminho_nomes, "r", encoding="utf-8") as arquivo:
         nomes = [linha.strip() for linha in arquivo if linha.strip()]
     return nomes
 
@@ -73,6 +77,8 @@ def iniciar_interface():
     root = tk.Tk()
     root.title("Renomear arquivos em massa")
 
+    progresso = ttk.Progressbar(root, length=100, mode='determinate')
+    progresso.grid(row=5, column=0, columnspan=3, padx=10, pady=20)
     arquivos_selecionados = []
 
     def selecionar_arquivos_callback():
@@ -94,8 +100,13 @@ def iniciar_interface():
                 title="Selecione o diretório de destino para as páginas divididas"
             )
             if diretorio_destino:
-                mensagem = dividir_pdf(caminho_pdf, diretorio_destino)
+                mensagem = dividir_pdf(
+                    caminho_pdf,
+                    diretorio_destino,
+                    progresso,
+                    root)
                 resultado_label.config(text=mensagem)
+                progresso['value'] = 0
 
     def renomear_arquivos_callback():
         caminho_nomes = filedialog.askopenfilename(
