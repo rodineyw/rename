@@ -28,7 +28,6 @@ def dividir_pdf(caminho_pdf: str, diretorio_destino: str, progresso, root):
                     escritor_pdf.write(arquivo_saida)
                 progresso['value'] = pagina + 1
                 root.update_idletasks()
-                return f"Página {pagina + 1} salva como: {novo_nome_pdf}"
 
         return "PDF divido com sucesso!"
     except ImportError as e:
