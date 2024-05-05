@@ -27,8 +27,6 @@ share/python-wheels/
 # PyInstaller
 # Usually the folder where PyInstaller builds the project
 bin/
-# The output folder used by PyInstaller for the final executable
-dist/
 # The build folder used by PyInstaller
 build/
 # PyInstaller log file
