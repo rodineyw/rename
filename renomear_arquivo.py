@@ -1,3 +1,5 @@
+""" Módulos para renomear arquivos em massa."""
+
 import sys
 import os
 from PyQt5.QtWidgets import (
