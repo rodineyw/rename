@@ -1,4 +1,8 @@
-[Tela do aplicativo](/assets/aplicativo.png)
+<div align="Center">
+   
+<img src="/assets/aplicativo.png" />
+
+</div>
 
 # Renomeador de Arquivos em Massa
 
