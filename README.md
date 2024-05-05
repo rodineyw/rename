@@ -1,4 +1,4 @@
-[!Tela do aplicativo](/assets/aplicativo.png)
+[Tela do aplicativo](/assets/aplicativo.png)
 
 # Renomeador de Arquivos em Massa
 
