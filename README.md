@@ -1,7 +1,7 @@
 # Renomeador de Arquivos em Massa
 
 Ei, pessoal! Bem-vindos ao Renomeador de Arquivos em Massa, o app que vai mudar a maneira como você lida com arquivos. Se você já cansou de renomear arquivos um por um, ou se precisa dar um nome especial para um monte de arquivos ao mesmo tempo, você está no lugar certo.
-****
+
 ## O Que Esse App Faz?
 
 Em resumo, ele é um renomeador de arquivos super prático. Você pode selecionar vários arquivos de uma vez e renomeá-los todos ao mesmo tempo, tudo numa interface gráfica fácil de usar. Ideal para quem trabalha com documentos, fotos, ou qualquer coisa que precise de nomes organizados.
@@ -14,12 +14,16 @@ Em resumo, ele é um renomeador de arquivos super prático. Você pode seleciona
 
 ## O Que Há de Novo?
 
-- Agora, você pode renomear arquivos usando uma lista de nomes que você mesmo cria.
-- Melhorias na interface gráfica, tornando tudo mais intuitivo e suave.
+- Agora, além da função de renomear arquivos em massa, você também pode dividir arquivos PDF em vários PDFs separados, tornando o aplicativo ainda mais versátil.
+
+## Plataforma Windows
+
+Se você estiver no Windows, pode executar o aplicativo diretamente sem a necessidade de instalação. Basta seguir as instruções em "Como Usar" abaixo.
+
 
 ## Como Usar
 
-Se você quer entrar nessa de renomear arquivos em massa, segue o passo a passo:
+Se você quer entrar nessa de renomear arquivos em massa e dividir PDFs, segue o passo a passo:
 
 1. **Clone o Repositório:** Copie o código para sua máquina local. É só fazer:
    ```bash
@@ -28,21 +32,10 @@ Se você quer entrar nessa de renomear arquivos em massa, segue o passo a passo:
 2. **Tenha o Python Instalado:** O app precisa do Python para rodar. Recomendamos a versão 3.10 ou superior.
 3. **Rode o App:** Entre na pasta do projeto e execute o arquivo principal:
    ```bash
-   python renomear_arquivos.py
+   python renomear_arquivo.py
    ```
-4. **Use a Interface:** Selecione os arquivos que quer renomear, insira os novos nomes em um arquivo .TXT pulando linhas para separar os diferentes nomes e escolha onde salvar. É bem tranquilo!
-5. **Bora Renomear:** Agora é só clicar e ver a mágica acontecer.
-
-## Plataforma Windows
-
-Se você estiver no Windows, pode instalar o App usando o instalador "Renomear_Arquivos_Instalador.exe".
-
-## Plataforma Linux e Mac
-
-Para usuários do Linux e Mac, o processo é basicamente o mesmo. Certifique-se de que o Python está instalado e siga os passos acima. Se precisar, instale o Tkinter com:
-```bash
-sudo apt-get install python3-tk  # Linux
-```
+4. **Use a Interface:** Selecione os arquivos que quer renomear, insira os novos nomes em um arquivo .TXT pulando linhas para separar os diferentes nomes e escolha onde salvar. Para dividir PDFs, selecione os arquivos PDF que deseja dividir e escolha a pasta de saída.
+5. **Bora Renomear ou Dividir:** Agora é só clicar e ver a mágica acontecer.
 
 ## Contribuições
 
