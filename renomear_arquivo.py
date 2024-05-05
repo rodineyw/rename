@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QProgressBar,
 )
+import qdarkstyle
 import PyPDF2
 
 
@@ -141,6 +142,7 @@ class GerenciadorPdf(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setStyleSheet(qdarkstyle.load_stylesheet())
     ex = GerenciadorPdf()
     ex.show()
     sys.exit(app.exec_())
