@@ -1,3 +1,5 @@
+[!Tela do aplicativo](/assets/aplicativo.png)
+
 # Renomeador de Arquivos em Massa
 
 Ei, pessoal! Bem-vindos ao Renomeador de Arquivos em Massa, o app que vai mudar a maneira como você lida com arquivos. Se você já cansou de renomear arquivos um por um, ou se precisa dar um nome especial para um monte de arquivos ao mesmo tempo, você está no lugar certo.
@@ -15,6 +17,7 @@ Em resumo, ele é um renomeador de arquivos super prático. Você pode seleciona
 ## O Que Há de Novo?
 
 - Agora, além da função de renomear arquivos em massa, você também pode dividir arquivos PDF em vários PDFs separados, tornando o aplicativo ainda mais versátil.
+- Inclusão do Tema Escura por padrão.
 
 ## Plataforma Windows
 
