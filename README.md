@@ -21,6 +21,7 @@ Em resumo, ele é um renomeador de arquivos super prático. Você pode seleciona
 ## O Que Há de Novo?
 
 - Agora, além da função de renomear arquivos em massa, você também pode dividir arquivos PDF em vários PDFs separados, tornando o aplicativo ainda mais versátil.
+  
 - Inclusão do Tema Escura por padrão.
 
 ## Plataforma Windows
