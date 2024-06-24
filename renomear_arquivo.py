@@ -15,6 +15,7 @@ from PyQt6.QtWidgets import (
 )
 import qdarkstyle
 import PyPDF2
+from PyPDF2 import PdfWriter
 
 
 class GerenciadorPdf(QWidget):
@@ -89,14 +90,23 @@ class GerenciadorPdf(QWidget):
             self, "Selecionar Pasta de Saída",
         )
         if pasta_saida and self.lista_arquivos.count() > 0:
-            total_files = self.lista_arquivos.count()
-            self.progress_bar.setMaximum(total_files)
-            for index in range(total_files):
+            merger = PdfWriter()
+            for index in range(self.lista_arquivos.count()):
                 caminho_arquivo = self.lista_arquivos.item(index).text()
                 if caminho_arquivo.lower().endswith(".pdf"):
-                    self.processar_pdf(caminho_arquivo, pasta_saida)
-                    self.progress_bar.setValue(index + 1)
-            self.progress_bar.setValue(0)
+                    with open(caminho_arquivo, "rb") as arquivo_pdf:
+                        leitor_pdf = PyPDF2.PdfReader(arquivo_pdf)
+                        for pagina in leitor_pdf.pages:
+                            merger.add_page(pagina)
+
+            # Especificar nome e caminho do arquivo de saída
+            arquivo_saida = QFileDialog.getSaveFileName(
+                self, "Salvar PDF Mesclado", pasta_saida, "PDF Files (*.pdf)")
+            if arquivo_saida[0]:
+                with open(arquivo_saida[0], "wb") as f:
+                    merger.write(f)
+                QMessageBox.information(
+                    self, "Sucesso", "Os PDFs foram mesclados com sucesso!")
 
     def processar_pdf(self, caminho_arquivo, pasta_saida):
         """Processa um arquivo PDF dividindo-o em páginas individuais."""
