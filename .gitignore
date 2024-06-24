@@ -79,3 +79,4 @@ ENV/
 # Other files and folders to ignore
 .DS_Store
 Thumbs.db
+cnab.pdf
