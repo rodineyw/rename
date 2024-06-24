@@ -58,13 +58,11 @@ class GerenciadorPdf(QWidget):
 
     def selecionar_arquivos(self):
         """Abre um diálogo para selecionar arquivos PDF."""
-        options = QFileDialog.Options()
         files, _ = QFileDialog.getOpenFileNames(
             self,
             "Selecionar Arquivos",
             "",
             "All Files (*);;PDF Files (*.pdf)",
-            options=options,
         )
         if files:
             self.lista_arquivos.clear()
@@ -72,9 +70,8 @@ class GerenciadorPdf(QWidget):
 
     def dividir_pdfs(self):
         """Abre um diálogo para selecionar a pasta de saída e divide os PDFs selecionados."""
-        options = QFileDialog.Options()
         pasta_saida = QFileDialog.getExistingDirectory(
-            self, "Selecionar Pasta de Saída", options=options
+            self, "Selecionar Pasta de Saída",
         )
         if pasta_saida and self.lista_arquivos.count() > 0:
             total_files = self.lista_arquivos.count()
@@ -88,9 +85,8 @@ class GerenciadorPdf(QWidget):
 
     def merge_pdfs(self):
         """Abre um diálogo para selecionar a pasta de saída e mescla os PDFs selecionados."""
-        options = QFileDialog.Options()
         pasta_saida = QFileDialog.getExistingDirectory(
-            self, "Selecionar Pasta de Saída", options=options
+            self, "Selecionar Pasta de Saída",
         )
         if pasta_saida and self.lista_arquivos.count() > 0:
             total_files = self.lista_arquivos.count()
@@ -122,13 +118,11 @@ class GerenciadorPdf(QWidget):
 
     def renomear_arquivos(self):
         """Abre um diálogo para selecionar o arquivo de texto com novos nomes e renomeia os arquivos."""
-        options = QFileDialog.Options()
         arquivo_nomes, _ = QFileDialog.getOpenFileName(
             self,
             "Selecionar Arquivo de Nomes",
             "",
             "Text Files (*.txt)",
-            options=options,
         )
         if arquivo_nomes:
             try:
