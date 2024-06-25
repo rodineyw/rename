@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QPushButton, QLabel, QListWidget,
@@ -38,7 +37,7 @@ class GerenciadorPdf(QWidget):
         self.layout.addWidget(self.merge_button)
 
         self.botao_renomear_arquivos = QPushButton(
-            "Renomear Arquivos com Texto", self)
+            "Renomear Arquivos com TXT", self)
         self.botao_renomear_arquivos.clicked.connect(self.renomear_arquivos)
         self.layout.addWidget(self.botao_renomear_arquivos)
 
@@ -47,22 +46,6 @@ class GerenciadorPdf(QWidget):
         self.botao_renomear_planilha.clicked.connect(
             self.renomear_com_planilha)
         self.layout.addWidget(self.botao_renomear_planilha)
-
-        self.label_colunas = QLabel(
-            "Selecione as Colunas para Renomeação", self)
-        self.label_colunas.setVisible(False)
-        self.layout.addWidget(self.label_colunas)
-
-        self.lista_colunas = QListWidget(self)
-        self.lista_colunas.setSelectionMode(
-            QListWidget.SelectionMode.MultiSelection)
-        self.lista_colunas.setVisible(False)
-        self.layout.addWidget(self.lista_colunas)
-
-        self.botao_aplicar_renomeacao = QPushButton("Aplicar Renomeação", self)
-        self.botao_aplicar_renomeacao.setVisible(False)
-        self.botao_aplicar_renomeacao.clicked.connect(self.aplicar_renomeacao)
-        self.layout.addWidget(self.botao_aplicar_renomeacao)
 
     def selecionar_arquivos(self):
         files, _ = QFileDialog.getOpenFileNames(
@@ -108,43 +91,15 @@ class GerenciadorPdf(QWidget):
             self.lista_arquivos.addItems(arquivos)
 
     def renomear_com_planilha(self):
-        arquivo_planilha, _ = QFileDialog.getOpenFileNames(
-            self, "Selecionar Planilha", "", "Excel Files (*.xlsx)")
-        if arquivo_planilha:
-            self.carregar_colunas(arquivo_planilha[0])
-
-    def carregar_colunas(self, arquivo_planilha):
-        try:
-            df = pd.read_excel(arquivo_planilha)
-            self.lista_colunas.clear()
-            self.lista_colunas.addItems(df.columns)
-            self.label_colunas.setVisible(True)
-            self.lista_colunas.setVisible(True)
-            self.botao_aplicar_renomeacao.setVisible(True)
-        except Exception as e:
-            QMessageBox.critical(self, "Erro ao carregar Colunas", str(e))
-
-    def aplicar_renomeacao(self):
-        colunas_selecionadas = [item.text()
-                                for item in self.lista_colunas.selectedItems()]
-        if not colunas_selecionadas:
-            QMessageBox.warning(self, "Erro", "Selecione ao menos uma coluna.")
-            return
-
         arquivo_planilha, _ = QFileDialog.getOpenFileName(
             self, "Selecionar Planilha", "", "Excel Files (*.xlsx)")
-
         if arquivo_planilha:
             pasta_saida = QFileDialog.getExistingDirectory(
                 self, "Selecionar Pasta de Saída")
-
             if pasta_saida:
                 arquivos = [self.lista_arquivos.item(
                     i).text() for i in range(self.lista_arquivos.count())]
-                renomear_com_planilha(arquivos, arquivo_planilha,
-                                      colunas_selecionadas, pasta_saida)
-                self.lista_arquivos.clear()
-                self.lista_arquivos.addItems(arquivos)
+                renomear_com_planilha(arquivos, arquivo_planilha, pasta_saida)
 
 
 if __name__ == "__main__":

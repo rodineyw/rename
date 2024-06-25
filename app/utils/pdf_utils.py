@@ -1,5 +1,7 @@
 import os
 import pandas as pd
+import fitz
+import re
 from PyPDF2 import PdfWriter, PdfReader
 
 
@@ -48,30 +50,52 @@ def renomear_com_texto(lista_arquivos, arquivo_nomes):
         print(f"Erro ao renomear arquivos: {str(e)}")
 
 
-def renomear_com_planilha(lista_arquivos, arquivo_planilha, colunas_selecionadas, pasta_saida):
+def renomear_com_planilha(lista_arquivos, arquivo_planilha, pasta_saida):
     try:
         df = pd.read_excel(arquivo_planilha)
-        total_files = len(lista_arquivos)
-        for index in range(total_files):
-            caminho_arquivo = lista_arquivos[index]
-            nome_partes = [str(df[col][index]) for col in colunas_selecionadas]
-            novo_nome = " - ".join(nome_partes) + ".pdf"
-            novo_caminho_arquivo = os.path.join(pasta_saida, novo_nome)
+        for arquivo in lista_arquivos:
+            # Abrir o PDF
+            pdf_document = fitz.open(arquivo)
+            page = pdf_document.load_page(0)
+            text = page.get_text()
 
-            # Ler o PDF original
-            pdf_reader = PdfReader(caminho_arquivo)
-            pdf_writer = PdfWriter()
+            # Extrair os dados
+            descricao_pattern = re.compile(
+                r"\b(\d+)\b\s*Descrição:", re.DOTALL)
+            valor_pattern = re.compile(r"R\$\s*([\d,]+,\d{2})", re.MULTILINE)
 
-            # Adicionar todas as páginas ao novo PDF
-            for page_num in range(len(pdf_reader.pages)):
-                pdf_writer.add_page(pdf_reader.pages[page_num])
+            descricao_match = descricao_pattern.search(text)
+            valor_match = valor_pattern.search(text)
 
-            # Escrever o novo PDF com o novo nome
-            with open(novo_caminho_arquivo, 'wb') as output_pdf:
-                pdf_writer.write(output_pdf)
+            descricao = descricao_match.group(
+                1).strip() if descricao_match else None
+            valor = valor_match.group(1).strip().replace(
+                '.', '').replace(',', '.') if valor_match else None
 
-            # Atualizar o caminho do arquivo na lista
-            lista_arquivos[index] = novo_caminho_arquivo
+            # Verificar valores extraídos
+            if descricao and valor:
+                valor = float(valor)
+                descricao = int(descricao)
 
+                matching_row = df[(df['PJ - Protocolo Jurídico']
+                                   == descricao) & (df['Valor Líquido'] == valor)]
+                if not matching_row.empty:
+                    tipo = matching_row['Tipo'].values[0]
+                    conta = matching_row['Conta'].values[0]
+                    protocolo_juridico = matching_row['PJ - Protocolo Jurídico'].values[0]
+                    novo_nome = f"{protocolo_juridico}_{tipo}_{conta}.pdf"
+                    novo_caminho = os.path.join(pasta_saida, novo_nome)
+
+                    # Fechar o documento PDF antes de renomeá-lo
+                    pdf_document.close()
+
+                    os.rename(arquivo, novo_caminho)
+                    print(f"Arquivo renomeado para: {novo_caminho}")
+                else:
+                    print(
+                        f"Dados não encontrados no arquivo Excel para o arquivo {arquivo}.")
+            else:
+                print(
+                    f"Falha ao extrair a descrição ou valor do PDF {arquivo}.")
     except Exception as e:
-        print(f"Erro ao renomear arquivos com planilha: {str(e)}")
+        print(f"Erro ao processar a renomeação com planilha: {str(e)}")
