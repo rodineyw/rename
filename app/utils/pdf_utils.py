@@ -48,7 +48,7 @@ def renomear_com_texto(lista_arquivos, arquivo_nomes):
         print(f"Erro ao renomear arquivos: {str(e)}")
 
 
-def renomear_com_planilha(lista_arquivos, arquivo_planilha, colunas_selecionadas):
+def renomear_com_planilha(lista_arquivos, arquivo_planilha, colunas_selecionadas, pasta_saida):
     try:
         df = pd.read_excel(arquivo_planilha)
         total_files = len(lista_arquivos)
@@ -56,8 +56,7 @@ def renomear_com_planilha(lista_arquivos, arquivo_planilha, colunas_selecionadas
             caminho_arquivo = lista_arquivos[index]
             nome_partes = [str(df[col][index]) for col in colunas_selecionadas]
             novo_nome = " - ".join(nome_partes) + ".pdf"
-            novo_caminho_arquivo = os.path.join(
-                os.path.dirname(caminho_arquivo), novo_nome)
+            novo_caminho_arquivo = os.path.join(pasta_saida, novo_nome)
 
             # Ler o PDF original
             pdf_reader = PdfReader(caminho_arquivo)

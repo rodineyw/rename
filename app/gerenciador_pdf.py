@@ -127,15 +127,24 @@ class GerenciadorPdf(QWidget):
     def aplicar_renomeacao(self):
         colunas_selecionadas = [item.text()
                                 for item in self.lista_colunas.selectedItems()]
-        arquivo_planilha, _ = QFileDialog.getOpenFileNames(
+        if not colunas_selecionadas:
+            QMessageBox.warning(self, "Erro", "Selecione ao menos uma coluna.")
+            return
+
+        arquivo_planilha, _ = QFileDialog.getOpenFileName(
             self, "Selecionar Planilha", "", "Excel Files (*.xlsx)")
+
         if arquivo_planilha:
-            arquivos = [self.lista_arquivos.item(
-                i).text() for i in range(self.lista_arquivos.count())]
-            renomear_com_planilha(
-                arquivos, arquivo_planilha[0], colunas_selecionadas)
-            self.lista_arquivos.clear()
-            self.lista_arquivos.addItems(arquivos)
+            pasta_saida = QFileDialog.getExistingDirectory(
+                self, "Selecionar Pasta de Saída")
+
+            if pasta_saida:
+                arquivos = [self.lista_arquivos.item(
+                    i).text() for i in range(self.lista_arquivos.count())]
+                renomear_com_planilha(arquivos, arquivo_planilha,
+                                      colunas_selecionadas, pasta_saida)
+                self.lista_arquivos.clear()
+                self.lista_arquivos.addItems(arquivos)
 
 
 if __name__ == "__main__":
