@@ -81,3 +81,5 @@ ENV/
 Thumbs.db
 cnab.pdf
 exemplo/
+dist/
+build/
