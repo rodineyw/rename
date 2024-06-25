@@ -25,7 +25,7 @@ exe = EXE(
     [],
     exclude_binaries=True,
     name='GerenciadorPDF',
-    debug=False,
+    debug=True,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,

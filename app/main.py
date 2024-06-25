@@ -3,9 +3,11 @@ from gerenciador_pdf import GerenciadorPdf
 
 
 def main():
+    print("Iniciando aplicação...")
     app = QApplication([])
     window = GerenciadorPdf()
     window.show()
+    print("Aplicação iniciada com sucesso.")
     app.exec()
 
 
