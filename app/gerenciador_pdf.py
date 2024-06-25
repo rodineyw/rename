@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
     QFileDialog, QMessageBox, QProgressBar, QApplication
 )
 # Ajuste conforme o caminho real de importação
-from app.utils.pdf_utils import dividir_pdf, mesclar_pdfs
+from utils.pdf_utils import dividir_pdf, mesclar_pdfs
 
 
 class GerenciadorPdf(QWidget):

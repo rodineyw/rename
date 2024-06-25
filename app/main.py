@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QApplication
-from app.gerenciador_pdf import GerenciadorPdf
+from gerenciador_pdf import GerenciadorPdf
 
 
 def main():

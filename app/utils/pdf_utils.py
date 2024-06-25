@@ -26,6 +26,6 @@ def mesclar_pdfs(lista_arquivos, pasta_saida):
             reader = PdfReader(f)
             for page in reader.pages:
                 merger.add_page(page)
-    caminho_saida = os.path.join(pasta_saida, "merged_document.pdf")
+    caminho_saida = os.path.join(pasta_saida, "Documento Mesclado.pdf")
     with open(caminho_saida, "wb") as f_out:
         merger.write(f_out)
