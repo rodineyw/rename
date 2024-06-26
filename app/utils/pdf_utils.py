@@ -80,10 +80,13 @@ def renomear_com_planilha(lista_arquivos, arquivo_planilha, pasta_saida):
                 matching_row = df[(df['PJ - Protocolo Jurídico']
                                    == descricao) & (df['Valor Líquido'] == valor)]
                 if not matching_row.empty:
-                    tipo = matching_row['Tipo'].values[0]
                     conta = matching_row['Conta'].values[0]
+                    valor = matching_row['Valor Líquido'].values[0]
+                    banco = matching_row['Banco'].values[0]
+                    titulo = matching_row['Título'].values[0]
                     protocolo_juridico = matching_row['PJ - Protocolo Jurídico'].values[0]
-                    novo_nome = f"{protocolo_juridico}_{tipo}_{conta}.pdf"
+                    novo_nome = f"{
+                        protocolo_juridico} - {conta} {valor} {banco} {titulo}.pdf"
                     novo_caminho = os.path.join(pasta_saida, novo_nome)
 
                     # Fechar o documento PDF antes de renomeá-lo
