@@ -89,6 +89,9 @@ class GerenciadorPdf(QWidget):
             renomear_com_texto(arquivos, arquivo_nomes)
             self.lista_arquivos.clear()
             self.lista_arquivos.addItems(arquivos)
+            QMessageBox.information(
+                self, "Sucesso", "Os arquivos foram renomeados com sucesso!"
+            )
 
     def renomear_com_planilha(self):
         arquivo_planilha, _ = QFileDialog.getOpenFileName(
@@ -100,6 +103,9 @@ class GerenciadorPdf(QWidget):
                 arquivos = [self.lista_arquivos.item(
                     i).text() for i in range(self.lista_arquivos.count())]
                 renomear_com_planilha(arquivos, arquivo_planilha, pasta_saida)
+                QMessageBox.information(
+                    self, "Sucesso", "Os arquivos foram renomeados conforme a planilha!"
+                )
 
 
 if __name__ == "__main__":
