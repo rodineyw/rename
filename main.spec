@@ -1,4 +1,4 @@
-# gerenciador_pdf.spec
+# main.spec
 
 # -*- mode: python ; coding: utf-8 -*-
 
@@ -8,8 +8,12 @@ a = Analysis(
     ['app/main.py'],
     pathex=['.'],
     binaries=[],
-    datas=[('resources/icons/icone.ico', 'resources/icons')],
-    hiddenimports=[],
+    datas=[
+        ('app/resources/icons/icone_gerenciador.ico', 'resources/icons')
+    ],
+    hiddenimports=[
+        'app.utils.pdf_utils'
+    ],
     hookspath=[],
     runtime_hooks=[],
     excludes=[],
@@ -24,13 +28,15 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='GerenciadorPDF',
-    debug=True,
+    name='gerenciador_pdf',
+    debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
     console=True,
-    icon='resources/icons/icone.ico',
+    icon='app/resources/icons/icone_gerenciador.ico'
 )
 
 coll = COLLECT(
@@ -41,5 +47,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='GerenciadorPDF',
+    name='gerenciador_pdf'
 )

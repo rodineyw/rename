@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QPushButton, QLabel, QListWidget,
     QFileDialog, QMessageBox, QProgressBar, QApplication
 )
-from utils.pdf_utils import dividir_pdf, mesclar_pdfs, renomear_com_texto, renomear_com_planilha
+from app.utils.pdf_utils import dividir_pdf, mesclar_pdfs, renomear_com_texto, renomear_com_planilha
 
 
 class GerenciadorPdf(QWidget):

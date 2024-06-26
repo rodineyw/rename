@@ -1,5 +1,7 @@
+import os
+import traceback
 from PyQt6.QtWidgets import QApplication
-from gerenciador_pdf import GerenciadorPdf
+from app.gerenciador_pdf import GerenciadorPdf
 
 
 def main():
@@ -15,5 +17,8 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
+        with open("erro_log.txt", "w") as f:
+            f.write("Ocorreu um erro inesperado:\n")
+            traceback.traceback.print_exc(file=f)
         print(f"Erro inesprado: {e}")
-        input("Pressione Enter para encerrar...")
+        input("Pressione Enter para sair...")
